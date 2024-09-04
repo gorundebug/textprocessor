@@ -9,11 +9,6 @@ bazel_dep(name = "protobuf", version = "27.1")
 bazel_dep(name = "gazelle", version = "0.37.0")
 
 go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")
-go_deps.config(
-    go_env = {
-        "GOPRIVATE": "github.com/gorundebug",
-    },
-)
 go_deps.from_file(go_mod = "//:go.mod")
 use_repo(
     go_deps,
@@ -24,5 +19,5 @@ use_repo(
 )
 
 go_sdk = use_extension("@rules_go//go:extensions.bzl", "go_sdk")
-go_sdk.download(version = "1.22.3")
+go_sdk.download(version = "1.23.0")
 go_sdk.host()
