@@ -1,0 +1,32 @@
+load("//:env.bzl", "PROJECT_PATH")
+load("@rules_go//go:def.bzl", "go_library")
+load("@rules_go//proto:def.bzl", "go_grpc_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+proto_library(
+    name = "proto_lib",
+    srcs = glob(["*.proto"]),
+    deps = [],
+    visibility = ["//visibility:public"],
+)
+
+go_grpc_library(
+    name = "go_proto_lib",
+    importpath = "{}/services/charsprocessor/generated/grpcsvc".format(PROJECT_PATH),
+    proto = ":proto_lib",
+    deps = [],
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "go_lib",
+    embed = [":go_proto_lib"],
+    importpath = "{}/services/charsprocessor/generated/grpcsvc".format(PROJECT_PATH),
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "grpc",
+    actual = ":go_lib",
+    visibility = ["//visibility:public"],
+)

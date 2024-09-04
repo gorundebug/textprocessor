@@ -1,0 +1,20 @@
+load("//:env.bzl", "PROJECT_PATH")
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "wordsprocessor_lib",
+    srcs = glob(["*.go"]),
+    importpath = "{}/cmd/wordsprocessor".format(PROJECT_PATH),
+    visibility = ["//visibility:private"],
+    deps = ["@com_github_sirupsen_logrus//:logrus",
+		"@com_github_gorundebug_servicelib//runtime",
+		"@com_github_gorundebug_servicelib//runtime/config",
+		"//services/wordsprocessor",
+		],
+)
+
+go_binary(
+    name = "wordsprocessor",
+    embed = [":wordsprocessor_lib"],
+    visibility = ["//visibility:public"],
+)

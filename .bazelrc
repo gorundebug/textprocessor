@@ -1,0 +1,2 @@
+build --enable_bzlmod --action_env=GOPRIVATE="github.com/gorundebug"
+query --enable_bzlmod

@@ -1,0 +1,30 @@
+load("//:env.bzl", "PROJECT_PATH")
+load("@rules_go//go:def.bzl", "go_library")
+load("@rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+
+proto_library(
+    name = "proto_lib",
+    srcs = glob(["*.proto"]),
+    visibility = ["//visibility:public"],
+)
+
+go_proto_library(
+    name = "go_proto_lib",
+    importpath = "{}/services/wordsprocessor/generated/pb".format(PROJECT_PATH),
+    proto = ":proto_lib",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "go_lib",
+    embed = [":go_proto_lib"],
+    importpath = "{}/services/wordsprocessor/generated/pb".format(PROJECT_PATH),
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "proto",
+    actual = ":go_lib",
+    visibility = ["//visibility:public"],
+)

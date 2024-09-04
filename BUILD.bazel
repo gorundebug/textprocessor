@@ -1,0 +1,32 @@
+load("@gazelle//:def.bzl", "gazelle")
+
+# gazelle:prefix example.com/textprocessor
+gazelle(name = "gazelle")
+
+gazelle(
+    name = "gazelle-update-repos",
+    args = [
+        "-from_file=go.mod",
+        "-to_macro=deps.bzl%go_dependencies",
+        "-prune",
+        "-go_env",
+    ],
+    command = "update-repos",
+)
+
+genrule(
+    name = "install",
+    srcs = ["//cmd/wordsprocessor:wordsprocessor",
+    "//cmd/charsprocessor:charsprocessor",
+    ],
+    outs = ["install_done"],
+    cmd = """
+        echo "Coping binary files..." && \
+        mkdir -p /textprocessor/bin && \
+        mkdir -p /textprocessor/bin/charsprocessor && cp $(location //cmd/charsprocessor:charsprocessor) /textprocessor/bin/charsprocessor/charsprocessor && \
+        mkdir -p /textprocessor/bin/wordsprocessor && cp $(location //cmd/wordsprocessor:wordsprocessor) /textprocessor/bin/wordsprocessor/wordsprocessor && \
+        touch $@
+    """,
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+)

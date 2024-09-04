@@ -1,0 +1,13 @@
+load("//:env.bzl", "PROJECT_PATH")
+load("//:helpers.bzl", "get_current_dir_name")
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = get_current_dir_name(),
+    srcs = glob(["*.go"]),
+    importpath = "{}/services/wordsprocessor/functions".format(PROJECT_PATH),
+    visibility = ["//visibility:public"],
+    deps = ["//services/wordsprocessor/proto",
+		"@com_github_gorundebug_servicelib//runtime",
+		],
+)

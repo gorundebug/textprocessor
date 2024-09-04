@@ -1,0 +1,25 @@
+load("//:env.bzl", "PROJECT_PATH")
+load("//:helpers.bzl", "get_current_dir_name")
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = get_current_dir_name(),
+    srcs = glob(["*.go"]),
+    importpath = "{}/services/wordsprocessor".format(PROJECT_PATH),
+    visibility = ["//visibility:public"],
+    deps = ["//services/wordsprocessor/serdes",
+		"@com_github_gorundebug_servicelib//runtime",
+		"@com_github_gorundebug_servicelib//runtime/serde",
+		"//services/wordsprocessor/proto",
+		"@org_golang_google_grpc//credentials/insecure",
+		"//services/wordsprocessor/config",
+		"@org_golang_google_grpc//:grpc",
+		"//services/charsprocessor/grpc",
+		"@com_github_gorundebug_servicelib//datasource",
+		"@com_github_gorundebug_servicelib//runtime/config",
+		"@com_github_gorundebug_servicelib//transformation",
+		"//services/wordsprocessor/functions",
+		"@com_github_gorundebug_servicelib//datasink",
+		"@com_github_sirupsen_logrus//:logrus",
+		],
+)

@@ -1,0 +1,21 @@
+load("//:env.bzl", "PROJECT_PATH")
+load("//:helpers.bzl", "get_current_dir_name")
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = get_current_dir_name(),
+    srcs = glob(["*.go"]),
+    importpath = "{}/services/charsprocessor".format(PROJECT_PATH),
+    visibility = ["//visibility:public"],
+    deps = ["@com_github_gorundebug_servicelib//runtime",
+		"@com_github_gorundebug_servicelib//runtime/serde",
+		"//services/charsprocessor/functions",
+		"@com_github_gorundebug_servicelib//datasink",
+		"@com_github_gorundebug_servicelib//transformation",
+		"@org_golang_google_grpc//:grpc",
+		"@com_github_sirupsen_logrus//:logrus",
+		"//services/charsprocessor/config",
+		"@com_github_gorundebug_servicelib//runtime/config",
+		"//services/charsprocessor/grpc",
+		],
+)

@@ -1,0 +1,17 @@
+syntax = "proto3";
+package grpcsvc;
+
+
+option go_package = "example.com/textprocessor/services/charsprocessor/generated/grpcsvc";
+
+service CharsProcessor {
+    rpc SplitToSplitword(SplitToSplitwordRequest) returns (SplitToSplitwordResponse) {}
+}
+
+
+message SplitToSplitwordRequest {
+    string val = 1;
+}
+
+message SplitToSplitwordResponse {
+}

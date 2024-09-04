@@ -1,0 +1,20 @@
+load("//:env.bzl", "PROJECT_PATH")
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "charsprocessor_lib",
+    srcs = glob(["*.go"]),
+    importpath = "{}/cmd/charsprocessor".format(PROJECT_PATH),
+    visibility = ["//visibility:private"],
+    deps = ["@com_github_sirupsen_logrus//:logrus",
+		"@com_github_gorundebug_servicelib//runtime",
+		"@com_github_gorundebug_servicelib//runtime/config",
+		"//services/charsprocessor",
+		],
+)
+
+go_binary(
+    name = "charsprocessor",
+    embed = [":charsprocessor_lib"],
+    visibility = ["//visibility:public"],
+)
