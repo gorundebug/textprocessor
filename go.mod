@@ -1,9 +1,9 @@
 module example.com/textprocessor
 
-go 1.22
+go 1.23
 
 require (
-	github.com/gorundebug/servicelib v0.0.120
+	github.com/gorundebug/servicelib v0.0.121
 	github.com/sirupsen/logrus v1.9.3
 	google.golang.org/grpc v1.64.0
 	google.golang.org/protobuf v1.34.2
